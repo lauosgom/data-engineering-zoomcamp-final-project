@@ -1,0 +1,35 @@
+select
+    -- *
+    -- identifiers
+    cast(Vendorid as INT64) as vendor_id,
+    cast(ratecodeid as INT64) as rate_code_id,
+    cast(pulocationid as INT64) as pickup_location_id,
+    cast(dolocationid as INT64) as dropoff_location_id,
+
+    -- timestamps
+    cast(lpep_pickup_datetime as timestamp) as pickup_datetime,
+    cast(lpep_dropoff_datetime as timestamp) as dropoff_datetime,
+    
+    -- trip info
+    store_and_fwd_flag,
+    cast(passenger_count as INT64) as passenger_count,
+    cast(trip_distance as FLOAT64) as trip_distance,
+    cast(trip_type as INT64) as trip_type,
+
+    -- payment info
+    cast(fare_amount as NUMERIC) as fare_amount,
+    cast(extra as NUMERIC) as extra,
+    cast(mta_tax as NUMERIC) as mta_tax,
+    cast(tip_amount as NUMERIC) as tip_amount,
+    cast(tolls_amount as NUMERIC) as tolls_amount,
+    cast(ehail_fee as NUMERIC) as ehail_fee,
+    cast(improvement_surcharge as NUMERIC) as improvement_surcharge,
+    cast(total_amount as NUMERIC) as total_amount,
+    cast(payment_type as INT64) as payment_type
+
+from {{ source('raw_data', 'green_tripdata') }}
+
+-- Filter out records with null vendor_id (data quality requirements)
+where Vendorid is not null
+order by lpep_pickup_datetime asc
+limit 2

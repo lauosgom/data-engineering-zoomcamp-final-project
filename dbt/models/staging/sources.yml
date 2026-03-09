@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: raw_data
+    description: "Raw data sources for NYC taxi rides"
+    database: singular-arbor-401018 #google cloud project id
+    schema: demo_dataset #dataset
+    tables:
+      - name: yellow_tripdata
+      - name: green_tripdata

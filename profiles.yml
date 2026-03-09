@@ -1,0 +1,82 @@
+user:
+  outputs:
+    default:
+      keyfile_json:
+        auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
+        auth_uri: https://accounts.google.com/o/oauth2/auth
+        client_email: terraform-demo-runner@singular-arbor-401018.iam.gserviceaccount.com
+        client_id: '113446065311117805169'
+        client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/terraform-demo-runner%40singular-arbor-401018.iam.gserviceaccount.com
+        private_key: '-----BEGIN PRIVATE KEY-----
+
+          MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCoK6LFVm8i2rC9
+
+          HoA6WIAjslHsK3VJgIej4H7Pe4IjKxQ+eBdnSK5UPQSRBF1uK9fbRuD8HFiCm4gB
+
+          q6fCS9QedRb39uD19gUdosqoxsDVHpNF/uGmQwcc2HC3dtrymq99IcsGIYK/AXO1
+
+          fUxfKF2sCv9lY4ThH+OKPeF8NuikEaIt3IU6Tto6Pz0io5rQoJ7yGcVmE3v86I6J
+
+          q23ab3WtTtgiW9cAoSY73XQNTL9sY6ak8s9ispK6b2NNVXEgSczBh5Ri2ViBzTNi
+
+          z+CC1F7Sgxjp+Jjz2+CFRJZq09lBKm2Tf9gb1bdNCWT07gF3G955RFsHQeUHMlTY
+
+          qeKlvDAnAgMBAAECggEATBg2llGWhzBqcaC4B+6cyMo67ID7mM86UQpXhx3NVIl9
+
+          JwkjGd6W11Im21GczymyiiuHyTwwRqUGxS69gZrbOA7mXjxNLa5tQSw0xGruvWCQ
+
+          5ka/JwLEWKaNVk7HIqigyJ++ZJ9MMI6BI3m3UYWL4Tm2t9NwwIcz6A05FwIngXkn
+
+          Bugyg+Ju0+fh1PmRZZS2htn0+0IOmqrNRzEL1j5Glmb+uO7CmEjvUc3vg0Jxj/Le
+
+          E9JQCyoGin6hTx7X8gUpRxKYTol7EoPGEVBMU36sS7DZaQCVnOgiHyygJt7Emuvn
+
+          LfRlhWj7waBiU0R9KhLY5WCUbtEG0ZbmffUN3xLcKQKBgQDco3k7E30v6e4v2qse
+
+          5at/0YGVq+El1t3KUWwHK+cuV6rYoV0C6h4sR/aMePJvptomuzUIoW1xzhNDPthL
+
+          upAWFOv8+EpQl4xGOXd+ts1sGSstOtiTJJhXGkAGWpu918VGbVfQezeHTAhcP2Ei
+
+          WX8h49PBhBd7hpBuwtAcaTFauQKBgQDDH3XreKCz6i0miH4iFYZQoIGR752jdiwO
+
+          CvLkoHf21j32T4VxbZk9RfDu4ZGebyiLg4scpqwDEi/mvL1bHsNmuWt9pXY6YvDb
+
+          Xl+C74MX4FCT3mF+FMtRGpscYDg3F0sSj6gWmSjAGu+EwZg2FNzkJ4PPJggUF+Oq
+
+          rQx0VQbx3wKBgEnlvq7Yoi8wDISemn2osr4Gr34vqSMBSht/Fc15GN7eoewYb4yQ
+
+          WTa/i4YU5C4dFieuv956IqvhN3ZoUA1dGPEsZLW/ezRu7Z5/lNQt6bNw4pMtiGgP
+
+          864IrrTyGAOHhx1FdgnvmvOHta0f1SqqCviQ09WWpj7LHQjb2tQJL2yRAoGAJ1zg
+
+          aAlkugbi5uQgNfYLq5ZFrVAeiAxd5NNWnsK0kMo1o8v1CqXmhRLoAPjmbITWNBbs
+
+          aHJDPzdbDHxE4u34029SfP11NWAiYM7QC9UPqDBrcPkqx8mgHpN0eSv8CzkavvrW
+
+          GQD61I5ahXicoURiL3C9SXvNo2gSWKsiWRGSHhcCgYADfSy9gB1pA1XxkuLOAhEV
+
+          Wvd2ZxHxZLmP+F6p2snEuSJdZijXtQeLnm6Pbz0AsYsPc2+MG+/Tc81tceY/1faJ
+
+          4wgXSl9ZdT1VRI3+oe59Ma1wz/+jgoReGDxpAcFNoAzyPQbfEXHp9dC+uEKQM2cJ
+
+          HEcJELqO8HB4Zp+O0pOhKg==
+
+          -----END PRIVATE KEY-----
+
+          '
+        private_key_id: e0163bbe2abe4c9a660428c6df9cdfa86de1707f
+        project_id: singular-arbor-401018
+        token_uri: https://oauth2.googleapis.com/token
+        type: service_account
+      method: service-account-json
+      project: singular-arbor-401018
+      schema: dbt
+      scopes:
+      - https://www.googleapis.com/auth/bigquery
+      - https://www.googleapis.com/auth/cloud-platform
+      - https://www.googleapis.com/auth/drive
+      - https://www.googleapis.com/auth/userinfo.email
+      target_name: default
+      threads: 4
+      type: bigquery
+  target: default
