@@ -12,17 +12,5 @@ if __name__ == "__main__":
         name="llamatel-monthly",
         work_pool_name="my-work-pool",
         cron="0 8 1 * *",
-        tags=["llamatel", "monthly"],
-        pull=[
-            {
-                "prefect.deployments.steps.pip_install_requirements": {
-                    "requirements_file": "requirements.txt"
-                }
-            },
-            {
-                "prefect.deployments.steps.run_shell_script": {
-                    "script": "playwright install chromium && playwright install-deps chromium"
-                }
-            }
-        ]
+        tags=["llamatel", "monthly"]
     )
