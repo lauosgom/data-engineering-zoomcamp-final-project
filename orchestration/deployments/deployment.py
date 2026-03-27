@@ -7,9 +7,26 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from orchestration.flows.main_flow import main_flow
 
 if __name__ == "__main__":
-    main_flow.deploy(
+    main_flow.from_source(
+        source="https://github.com/lauosgom/data-engineering-zoomcamp-final-project.git",
+        entrypoint="orchestration/flows/main_flow.py:main_flow"
+    ).deploy(
         name="llamatel-monthly",
         work_pool_name="my-work-pool",
         cron="0 8 1 * *",
-        tags=["llamatel", "monthly"]
+        tags=["llamatel", "monthly"],
+	 job_variables={
+            "pip_packages": [
+                "pandas",
+                "pdfplumber",
+                "playwright",
+                "ftfy",
+                "google-cloud-storage",
+                "google-cloud-bigquery",
+                "db-dtypes",
+                "pandas-gbq",
+                "python-dotenv",
+                "prefect"
+            ]
+        }
     )
