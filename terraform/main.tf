@@ -391,3 +391,16 @@ resource "google_compute_firewall" "prefect-worker-ssh" {
   target_tags   = ["prefect-worker"]
   source_ranges = ["0.0.0.0/0"]
 }
+
+resource "google_compute_firewall" "prefect-server" {
+  name    = "allow-prefect-server"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["4200"]
+  }
+
+  target_tags   = ["prefect-worker"]
+  source_ranges = ["0.0.0.0/0"]
+}
