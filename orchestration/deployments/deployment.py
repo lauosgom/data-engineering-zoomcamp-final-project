@@ -1,6 +1,8 @@
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
+PROJECT_ROOT = Path.home() / "data-engineering-zoomcamp-final-project"
+sys.path.insert(0, str(PROJECT_ROOT))
 
 from orchestration.flows.main_flow import main_flow
 
@@ -9,6 +11,5 @@ if __name__ == "__main__":
         name="llamatel-monthly",
         work_pool_name="my-work-pool",
         cron="0 8 1 * *",
-        tags=["llamatel", "monthly"],
-        # no parameters here — scheduled runs use last month by default
+        tags=["llamatel", "monthly"]
     )

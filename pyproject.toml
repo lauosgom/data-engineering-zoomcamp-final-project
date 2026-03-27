@@ -1,0 +1,40 @@
+[project]
+name = "anomaly"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "dotenv>=0.9.9",
+    "ftfy>=6.3.1",
+    "google-cloud-bigquery>=3.40.1",
+    "google-cloud-storage>=3.9.0",
+    "kagglehub>=1.0.0",
+    "matplotlib>=3.10.8",
+    "numpy>=2.4.2",
+    "pandas>=3.0.1",
+    "pandas-gbq>=0.34.0",
+    "pdfplumber>=0.11.9",
+    "playwright>=1.58.0",
+    "predictr>=0.1.30",
+    "prefect>=3.6.23",
+    "pyarrow>=23.0.1",
+    "pyspark>=4.1.1",
+    "scikit-learn>=1.8.0",
+    "seaborn>=0.13.2",
+    "setuptools==70.3.0",
+    "sns>=0.1",
+    "tensorflow>=2.20.0",
+    "ucimlrepo>=0.0.7",
+    "xgboost>=3.2.0",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.2.0",
+    "jupyter>=1.1.1",
+    "notebook>=7.5.4",
+]
+
+[tool.uv.workspace]
+exclude = ["transform"]
