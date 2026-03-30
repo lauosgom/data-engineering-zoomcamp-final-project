@@ -92,7 +92,6 @@ select
 
 
 from deduped parsed
-where rn = 1
 
 --medio_contacto
 left join lookup_table contacto
@@ -245,3 +244,5 @@ left join lookup_table orientadorActitudesEquivocadas
 left join lookup_table orientadorSatisfaccionLlamante
     on orientadorSatisfaccionLlamante.campo = 'orientador_satisfaccion_llamante'
     and orientadorSatisfaccionLlamante.codigo = parsed.orientador_satisfaccion_llamante
+
+where rn = 1
