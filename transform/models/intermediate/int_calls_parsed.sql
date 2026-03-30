@@ -40,10 +40,10 @@ parsed as (
 
         -- combined datetime columns
         datetime(llamada_fecha, llamada_hora)       as llamada_datetime,
-        datetime(entrevista_fecha, entrevista_hora) as entrevista_datetime
+        datetime(entrevista_fecha, entrevista_hora) as entrevista_datetime,
 
         -- combined codes
-	concat(codigo_letras, '-', cast(codigo_numero as STRING)) as codigo_id,
+	concat(codigo_letras, '-', cast(codigo_numero as STRING)) as codigo_id
 
     from source
 )
