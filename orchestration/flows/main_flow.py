@@ -24,13 +24,17 @@ def get_last_month_range() -> tuple[str, str]:
 
 @flow(name="llamatel-pipeline")
 def main_flow(
-    start_date: str = None,
-    end_date: str = None,
+    start_date: str = "",
+    end_date: str = "",
 ):
     logger = get_run_logger()
 
     # if no dates provided, default to last month (used by scheduled runs)
-    _start, _end = start_date, end_date
+    _start = start_date if start_date else get_last_month_range()[0]
+    _end = end_date if end_date else get_last_month_range()[1]
+
+    logger.info(f"Running pipeline for {_start} to {_end}")
+
     if not _start or not _end:
         _start, _end = get_last_month_range()
 
