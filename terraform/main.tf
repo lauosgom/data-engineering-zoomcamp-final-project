@@ -416,3 +416,68 @@ resource "google_compute_firewall" "prefect-server" {
   target_tags   = ["prefect-worker"]
   source_ranges = ["0.0.0.0/0"]
 }
+
+resource "google_bigquery_table" "table-firebase" {
+  dataset_id          = "raw"
+  table_id            = "llamatel-llamadas-firebase"
+  deletion_protection = false
+  depends_on          = [google_bigquery_dataset.raw]
+
+  schema = jsonencode([
+    { name = "Orientador", type = "STRING", mode = "NULLABLE" },
+    { name = "Medio_de_Contacto", type = "STRING", mode = "NULLABLE" },
+    { name = "Como_Conocio", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Sexo", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Edad", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Estado_Civil", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Convive", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Asiduidad", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Problematica_1", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Problema_1", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Problematica_2", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Problema_2", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Problematica_3", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Problema_3", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Naturaleza", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Inicio", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Actitud", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Presentacion", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Paralenguaje", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Procedencia", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Peticion", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Actitud_Problema_1", type = "FLOAT64", mode = "NULLABLE" },
+    { name = "L_Actitud_Problema_2", type = "FLOAT64", mode = "NULLABLE" },
+    { name = "L_Condicion", type = "STRING", mode = "NULLABLE" },
+    { name = "L_Derivada", type = "STRING", mode = "NULLABLE" },
+    { name = "T_Sexo", type = "STRING", mode = "NULLABLE" },
+    { name = "T_Edad", type = "STRING", mode = "NULLABLE" },
+    { name = "T_Estado_Civil", type = "STRING", mode = "NULLABLE" },
+    { name = "T_Convive", type = "STRING", mode = "NULLABLE" },
+    { name = "T_Relacion", type = "STRING", mode = "NULLABLE" },
+    { name = "T_Problematica_1", type = "FLOAT64", mode = "NULLABLE" },
+    { name = "T_Problema_1", type = "FLOAT64", mode = "NULLABLE" },
+    { name = "T_Problematica_2", type = "FLOAT64", mode = "NULLABLE" },
+    { name = "T_Problema_2", type = "FLOAT64", mode = "NULLABLE" },
+    { name = "T_Problematica_3", type = "FLOAT64", mode = "NULLABLE" },
+    { name = "T_Problema_3", type = "FLOAT64", mode = "NULLABLE" },
+    { name = "T_Actitud_Problema_1", type = "FLOAT64", mode = "NULLABLE" },
+    { name = "T_Actitud_Problema_2", type = "FLOAT64", mode = "NULLABLE" },
+    { name = "Fecha", type = "STRING", mode = "NULLABLE" },
+    { name = "Hora", type = "STRING", mode = "NULLABLE" },
+    { name = "Resultado", type = "STRING", mode = "NULLABLE" },
+    { name = "Duracion", type = "STRING", mode = "NULLABLE" },
+    { name = "O_Clave", type = "STRING", mode = "NULLABLE" },
+    { name = "O_Autoevaluacion", type = "STRING", mode = "NULLABLE" },
+    { name = "O_Volvera_Llamar", type = "STRING", mode = "NULLABLE" },
+    { name = "O_Nivel_Ayuda_1", type = "STRING", mode = "NULLABLE" },
+    { name = "O_Nivel_Ayuda_2", type = "STRING", mode = "NULLABLE" },
+    { name = "O_Sentimientos_1", type = "STRING", mode = "NULLABLE" },
+    { name = "O_Sentimientos_2", type = "STRING", mode = "NULLABLE" },
+    { name = "O_Sentimientos_3", type = "STRING", mode = "NULLABLE" },
+    { name = "O_Actitudes_1", type = "STRING", mode = "NULLABLE" },
+    { name = "O_Actitudes_2", type = "STRING", mode = "NULLABLE" },
+    { name = "O_Satisfaccion_1", type = "STRING", mode = "NULLABLE" },
+    { name = "O_Satisfaccion_2", type = "STRING", mode = "NULLABLE" },
+    { name = "Sintesis", type = "STRING", mode = "NULLABLE" }
+  ])
+}
