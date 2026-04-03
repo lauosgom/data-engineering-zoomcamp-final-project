@@ -419,7 +419,7 @@ resource "google_compute_firewall" "prefect-server" {
 
 resource "google_bigquery_table" "table-firebase" {
   dataset_id          = "raw"
-  table_id            = "llamatel-llamadas-firebase"
+  table_id            = "llamatel_llamadas_firebase"
   deletion_protection = false
   depends_on          = [google_bigquery_dataset.raw]
 
@@ -480,4 +480,68 @@ resource "google_bigquery_table" "table-firebase" {
     { name = "O_Satisfaccion_2", type = "STRING", mode = "NULLABLE" },
     { name = "Sintesis", type = "STRING", mode = "NULLABLE" }
   ])
+}
+
+resource "google_bigquery_table" "table-firebase-changelog" {
+  project             = "singular-arbor-401018"
+  dataset_id          = "raw"
+  table_id            = "llamatel_llamadas_firebase_raw_changelog"
+  deletion_protection = false
+  depends_on          = [google_bigquery_dataset.raw]
+
+  schema = jsonencode([
+    { name = "timestamp", type = "TIMESTAMP", mode = "NULLABLE" },
+    { name = "event_id", type = "STRING", mode = "NULLABLE" },
+    { name = "document_name", type = "STRING", mode = "NULLABLE" },
+    { name = "operation", type = "STRING", mode = "NULLABLE" },
+    { name = "data", type = "STRING", mode = "NULLABLE" },
+    { name = "old_data", type = "STRING", mode = "NULLABLE" },
+    { name = "document_id", type = "STRING", mode = "NULLABLE" }
+  ])
+}
+
+resource "google_bigquery_table" "table-lists-firebase" {
+  project             = "singular-arbor-401018"
+  dataset_id          = "raw"
+  table_id            = "llamatel_lists_firebase"
+  deletion_protection = false
+  depends_on          = [google_bigquery_dataset.raw]
+
+  schema = jsonencode([
+    { name = "lista", type = "STRING", mode = "NULLABLE" },
+    { name = "active", type = "BOOLEAN", mode = "NULLABLE" },
+    { name = "label", type = "STRING", mode = "NULLABLE" },
+    { name = "value", type = "STRING", mode = "NULLABLE" },
+    { name = "document_id", type = "STRING", mode = "NULLABLE" },
+    { name = "last_updated", type = "TIMESTAMP", mode = "NULLABLE" }
+  ])
+}
+
+resource "google_bigquery_table" "table-lists-changelog" {
+  project             = "singular-arbor-401018"
+  dataset_id          = "raw"
+  table_id            = "llamatel_lists_firebase_raw_changelog"
+  deletion_protection = false
+  depends_on          = [google_bigquery_dataset.raw]
+
+  schema = jsonencode([
+    { name = "timestamp", type = "TIMESTAMP", mode = "NULLABLE" },
+    { name = "event_id", type = "STRING", mode = "NULLABLE" },
+    { name = "document_name", type = "STRING", mode = "NULLABLE" },
+    { name = "operation", type = "STRING", mode = "NULLABLE" },
+    { name = "data", type = "STRING", mode = "NULLABLE" },
+    { name = "old_data", type = "STRING", mode = "NULLABLE" },
+    { name = "document_id", type = "STRING", mode = "NULLABLE" }
+  ])
+}
+
+resource "google_bigquery_table_iam_binding" "lists-changelog-iam" {
+  project    = "singular-arbor-401018"
+  dataset_id = "raw"
+  table_id   = "llamatel_lists_firebase_raw_changelog"
+  role       = "roles/bigquery.dataOwner"
+  members    = [
+    "serviceAccount:ext-firestore-bigquery-export@telespantgrav.iam.gserviceaccount.com"
+  ]
+  depends_on = [google_bigquery_table.table-lists-changelog]
 }
