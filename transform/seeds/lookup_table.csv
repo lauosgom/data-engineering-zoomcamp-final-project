@@ -15,7 +15,7 @@ llamante_edad,5,De 46 a 56
 llamante_edad,6,De 55 a 65
 llamante_edad,7,de 66 a 75
 llamante_edad,8,76 o mas
-llamante_edad,9,"Si, definir"
+llamante_edad,9,"Sin, definir"
 llamante_estado_civil,0,No lo sé
 llamante_estado_civil,1,Soltero
 llamante_estado_civil,2,Casado

@@ -7,3 +7,5 @@ sources:
     schema: raw #dataset
     tables:
       - name: llamatel-llamadas 
+      - name: llamatel_llamadas_firebase
+      - name: llamatel_lists_firebase

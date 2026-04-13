@@ -67,10 +67,33 @@ def scrape(on_record=None, start_date: str = None, end_date: str = None) -> None
 
         def go_to_next() -> bool:
             next_link = page.locator("a:has-text('Siguiente')")
-            if next_link.count() > 0:
-                next_link.click()
-                page.wait_for_load_state("domcontentloaded")
-                return True
+            if next_link.count() == 0:
+                return False
+            
+            for attempt in range(3):
+                try:
+                    # Hide chat widget that intercepts clicks
+                    page.evaluate("""
+                        const chat = document.getElementById('chat-app');
+                        if (chat) chat.style.display = 'none';
+                    """)
+                    next_link.click(timeout=30000)
+                    page.wait_for_load_state("domcontentloaded")
+                    return True
+                except Exception as e:
+                    if 'Timeout' in type(e).__name__ or 'Timeout' in str(e):
+                        if attempt < 2:
+                            print(f"Timeout on attempt {attempt + 1}, refreshing page...")
+                            page.reload(wait_until="domcontentloaded")
+                            next_link = page.locator("a:has-text('Siguiente')")
+                            if next_link.count() == 0:
+                                return False
+                        else:
+                            print("Max retries reached on Siguiente button")
+                            return False
+                    else:
+                        raise
+            
             return False
 
         # --- main flow ---
