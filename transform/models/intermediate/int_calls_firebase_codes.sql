@@ -51,74 +51,80 @@ select
         calls.last_updated,
 
         --general call info
-        list_medio_contacto.label as medio_contacto,
-        list_como_conocio.label as como_conocio,
-        list_llamada_derivada.label as llamante_llamada_derivada,
-        llamada_hora,
-        llamada_fecha,
-        list_resultado.label as llamada_resultado,
-        list_duracion.label as llamada_duracion,
+        {{ strip_code_prefix('list_medio_contacto.label') }} as medio_contacto,
+        {{ strip_code_prefix('list_como_conocio.label') }} as como_conocio,
+        {{ strip_code_prefix('list_llamada_derivada.label') }} as llamante_llamada_derivada,
+        
+        datetime(
+                CAST(llamada_fecha AS DATE),
+                CAST(CONCAT(llamada_hora, ':00') AS TIME)
+        ) as llamada_datetime,
+        
+        {{ strip_code_prefix('list_resultado.label')}} as llamada_resultado,
+        {{ strip_code_prefix('list_duracion.label')}} as llamada_duracion,
         sintesis,
 
         --caller info
-        list_sexo.label as llamante_sexo,
-        list_edad.label as llamante_edad,
-        list_estado_civil.label as llamante_estado_civil,
-        list_convive.label as llamante_convive,
-        list_asiduidad.label as llamante_asiduidad,
-        list_procedencia.label as llamante_procedencia,
-        list_condicion.label as llamante_condicion,
+        {{ strip_code_prefix('list_sexo.label')}} as llamante_sexo,
+        {{ strip_code_prefix('list_edad.label')}} as llamante_edad,
+        {{ strip_code_prefix('list_estado_civil.label')}} as llamante_estado_civil,
+        {{ strip_code_prefix('list_convive.label')}} as llamante_convive,
+        {{ strip_code_prefix('list_asiduidad.label')}} as llamante_asiduidad,
+        {{ strip_code_prefix('list_procedencia.label')}} as llamante_procedencia,
+        {{ strip_code_prefix('list_condicion.label')}} as llamante_condicion,
 
         --caller problem
-        list_problematica_1.label as llamante_problematica_1,
-        list_problema_1.label as llamante_problema_1,
-        list_problematica_2.label as llamante_problematica_2,
-        list_problema_2.label as llamante_problema_2,
-        list_problematica_3.label as llamante_problematica_3,
-        list_problema_3.label as llamante_problema_3,
-        list_naturaleza.label as llamante_naturaleza,
-        list_inicio.label as llamante_inicio,
-        list_peticion.label as llamante_peticion,
+        {{ strip_code_prefix('list_problematica_1.label')}} as llamante_problematica_1,
+        {{ strip_code_prefix('list_problema_1.label')}} as llamante_problema_1,
+        {{ strip_code_prefix('list_problematica_2.label')}} as llamante_problematica_2,
+        {{ strip_code_prefix('list_problema_2.label')}} as llamante_problema_2,
+        {{ strip_code_prefix('list_problematica_3.label')}} as llamante_problematica_3,
+        {{ strip_code_prefix('list_problema_3.label')}} as llamante_problema_3,
+        {{ strip_code_prefix('list_naturaleza.label')}} as llamante_naturaleza,
+        {{ strip_code_prefix('list_inicio.label')}} as llamante_inicio,
+        {{ strip_code_prefix('list_peticion.label')}} as llamante_peticion,
   
         --caller language and attitude
-        list_actitud.label as llamante_actitud_orientador,
-        list_presentacion.label as llamante_presentacion,
-        list_paralenguaje.label as llamante_paralenguaje,
-        list_actitud_problema_1.label as llamante_actitud_problema_1,
-        list_actitud_problema_2.label as llamante_actitud_problema_2,
+        {{ strip_code_prefix('list_actitud.label')}} as llamante_actitud_orientador,
+        {{ strip_code_prefix('list_presentacion.label')}} as llamante_presentacion,
+        {{ strip_code_prefix('list_paralenguaje.label')}} as llamante_paralenguaje,
+        {{ strip_code_prefix('list_actitud_problema_1.label')}} as llamante_actitud_problema_1,
+        {{ strip_code_prefix('list_actitud_problema_2.label')}} as llamante_actitud_problema_2,
 
         --third party info
-        list_tercero_sexo.label as tercero_sexo,
-        list_tercero_edad.label as tercero_edad,
-        list_tercero_estado_civil.label as tercero_estado_civil,
-        list_tercero_convive.label as tercero_convive,
-        list_tercero_relacion.label as tercero_relacion,
+        {{ strip_code_prefix('list_tercero_sexo.label')}} as tercero_sexo,
+        {{ strip_code_prefix('list_tercero_edad.label')}} as tercero_edad,
+        {{ strip_code_prefix('list_tercero_estado_civil.label')}} as tercero_estado_civil,
+        {{ strip_code_prefix('list_tercero_convive.label')}} as tercero_convive,
+        {{ strip_code_prefix('list_tercero_relacion.label')}} as tercero_relacion,
 
         --third party problem
-        list_tercero_problematica_1.label as tercero_problematica_1,
-        list_tercero_problema_1.label as tercero_problema_1,
-        list_tercero_problematica_2.label as tercero_problematica_2,
-        list_tercero_problema_2.label as tercero_problema_2,
-        list_tercero_problematica_3.label as tercero_problematica_3,
-        list_tercero_problema_3.label as tercero_problema_3,
-        list_tercero_actitud_problema_1.label as tercero_actitud_problema_1,
-        list_tercero_actitud_problema_2.label as tercero_actitud_problema_2,
+        {{ strip_code_prefix('list_tercero_problematica_1.label')}} as tercero_problematica_1,
+        {{ strip_code_prefix('list_tercero_problema_1.label')}} as tercero_problema_1,
+        {{ strip_code_prefix('list_tercero_problematica_2.label')}} as tercero_problematica_2,
+        {{ strip_code_prefix('list_tercero_problema_2.label')}} as tercero_problema_2,
+        {{ strip_code_prefix('list_tercero_problematica_3.label')}} as tercero_problematica_3,
+        {{ strip_code_prefix('list_tercero_problema_3.label')}} as tercero_problema_3,
+        {{ strip_code_prefix('list_tercero_actitud_problema_1.label')}} as tercero_actitud_problema_1,
+        {{ strip_code_prefix('list_tercero_actitud_problema_2.label')}} as tercero_actitud_problema_2,
 
         --orientador info
         orientador_clave,
 
         --orientador perception of call
-        list_orientador_nivel_ayuda_1.label as orientador_nivel_ayuda_1,
-        list_orientador_nivel_ayuda_2.label as orientador_nivel_ayuda_2,
-        list_orientador_sentimientos_1.label as orientador_sentimientos_1,
-        list_orientador_sentimientos_2.label as orientador_sentimientos_2,
-        list_orientador_sentimientos_3.label as orientador_sentimientos_3,
-        list_orientador_autoevaluacion.label as orientador_autoevaluacion,
-        list_orientador_actitudes_equivocadas_1.label as orientador_actitudes_equivocadas_1,
-        list_orientador_actitudes_equivocadas_2.label as orientador_actitudes_equivocadas_2,
-        list_orientador_satisfaccion_llamante_1.label as orientador_satisfaccion_llamante_1,
-        list_orientador_satisfaccion_llamante_2.label as orientador_satisfaccion_llamante_2,
-        list_volvera_llamar.label as orientador_volvera_llamar
+        {{ strip_code_prefix('list_orientador_nivel_ayuda_1.label')}} as orientador_nivel_ayuda_1,
+        {{ strip_code_prefix('list_orientador_nivel_ayuda_2.label')}} as orientador_nivel_ayuda_2,
+        {{ strip_code_prefix('list_orientador_sentimientos_1.label')}} as orientador_sentimientos_1,
+        {{ strip_code_prefix('list_orientador_sentimientos_2.label')}} as orientador_sentimientos_2,
+        {{ strip_code_prefix('list_orientador_sentimientos_3.label')}} as orientador_sentimientos_3,
+        {{ strip_code_prefix('list_orientador_autoevaluacion.label')}} as orientador_autoevaluacion,
+        {{ strip_code_prefix('list_orientador_actitudes_equivocadas_1.label')}} as orientador_actitudes_equivocadas_1,
+        {{ strip_code_prefix('list_orientador_actitudes_equivocadas_2.label')}} as orientador_actitudes_equivocadas_2,
+        {{ strip_code_prefix('list_orientador_satisfaccion_llamante_1.label')}} as orientador_satisfaccion_llamante_1,
+        {{ strip_code_prefix('list_orientador_satisfaccion_llamante_2.label')}} as orientador_satisfaccion_llamante_2,
+        {{ strip_code_prefix('list_volvera_llamar.label')}} as orientador_volvera_llamar,
+
+        'firebase' as source
 
 
 from calls_firebase calls

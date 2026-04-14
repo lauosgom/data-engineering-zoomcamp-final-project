@@ -94,6 +94,7 @@ select
 
     orientadorSentimientos_1.valor as orientador_sentimientos_1,
     orientadorSentimientos_2.valor as orientador_sentimientos_2,
+    orientadorSentimientos_3.valor as orientador_sentimientos_3,
 
     orientadorAutoevaluacion.valor as orientador_autoevaluacion,
 
@@ -101,7 +102,9 @@ select
     orientadorActitudesEquivocadas_2.valor as orientador_actitudes_equivocadas_2,
 
     orientadorSatisfaccionLlamante_1.valor as orientador_satisfaccion_llamante_1,
-    orientadorSatisfaccionLlamante_2.valor as orientador_satisfaccion_llamante_2
+    orientadorSatisfaccionLlamante_2.valor as orientador_satisfaccion_llamante_2,
+
+    source
 
 from deduped parsed
 
@@ -253,6 +256,10 @@ left join lookup_table orientadorSentimientos_1
 left join lookup_table orientadorSentimientos_2
     on orientadorSentimientos_2.campo = 'orientador_sentimientos'
     and orientadorSentimientos_2.codigo = parsed.orientador_sentimientos_2
+
+left join lookup_table orientadorSentimientos_3
+    on orientadorSentimientos_3.campo = 'orientador_sentimientos'
+    and orientadorSentimientos_3.codigo = parsed.orientador_sentimientos_3
 
 --orientador autoevaluacion
 left join lookup_table orientadorAutoevaluacion

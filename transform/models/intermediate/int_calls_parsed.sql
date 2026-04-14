@@ -63,6 +63,7 @@ parsed as (
         --split orientador_sentimientos by space into two separate columns
         split(orientador_sentimientos, ' ')[safe_offset(0)] as orientador_sentimientos_1,
         split(orientador_sentimientos, ' ')[safe_offset(1)] as orientador_sentimientos_2,
+        split(orientador_sentimientos, ' ')[safe_offset(2)] as orientador_sentimientos_3,
 
         --split orientador_actitudes_equivocadas by space into two separate columns
         split(orientador_actitudes_equivocadas, ' ')[safe_offset(0)] as orientador_actitudes_equivocadas_1,

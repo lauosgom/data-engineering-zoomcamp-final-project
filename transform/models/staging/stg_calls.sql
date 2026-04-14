@@ -60,7 +60,9 @@ select
  orientador_sentimientos,
  orientador_autoevaluacion,
  orientador_actitudes_equivocadas,
- orientador_satisfaccion_llamante
+ orientador_satisfaccion_llamante,
+
+ 'llamatel' as source
 
 from {{ source('raw_data', 'llamatel-llamadas') }}
 
