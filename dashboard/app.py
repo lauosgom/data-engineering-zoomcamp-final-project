@@ -12,8 +12,11 @@ st.set_page_config(
 
 st.markdown("""
     <style>
+    .stApp { background-color: #F5F3EE; }
     .block-container { padding-top: 2rem; }
     h1 { color: #085041; font-weight: 500; }
+    span[data-baseweb="tag"] { background-color: #1D9E75 !important; color: white !important; }
+    span[data-baseweb="tag"] span { color: white !important; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -117,17 +120,20 @@ with col_left:
         .sort_values("month_num")
     )
     month_order = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+    monthly["year"] = monthly["year"].astype(str)
+    all_years_str = sorted(df["year"].astype(str).unique())
+    color_map = {y: TEAL[i % len(TEAL)] for i, y in enumerate(all_years_str)}
     fig_bar = px.bar(
         monthly,
         x="month",
         y="llamadas",
         color="year",
-        color_discrete_sequence=TEAL,
-        category_orders={"month": month_order},
+        color_discrete_map=color_map,
+        category_orders={"month": month_order, "year": all_years_str},
         labels={"llamadas": "Llamadas", "month": "Mes", "year": "Año"}
     )
     fig_bar.update_layout(
-        plot_bgcolor="#F5F3EE",
+        plot_bgcolor="#FFFFFF",
         paper_bgcolor="rgba(0,0,0,0)",
         legend_title="Año",
         margin=dict(t=20, b=20),
@@ -149,6 +155,7 @@ with col_right:
         )
         fig_gender.update_traces(textposition="inside", textinfo="percent")
         fig_gender.update_layout(
+            plot_bgcolor="#FFFFFF",
             paper_bgcolor="rgba(0,0,0,0)",
             margin=dict(t=20, b=20),
             legend=dict(orientation="h", yanchor="bottom", y=-0.2),
@@ -164,6 +171,7 @@ with col_bottom_left:
         problems = (
             df_filtered["llamante_problematica_1"]
             .dropna()
+            .loc[lambda x: x.str.strip() != ""]
             .value_counts()
             .head(10)
             .reset_index()
@@ -179,7 +187,7 @@ with col_bottom_left:
             labels={"count": "Llamadas", "problematica": ""}
         )
         fig_prob.update_layout(
-            plot_bgcolor="#F5F3EE",
+            plot_bgcolor="#FFFFFF",
             paper_bgcolor="rgba(0,0,0,0)",
             margin=dict(t=20, b=20),
             font=dict(color="#085041")
@@ -198,7 +206,7 @@ with col_bottom_right:
                 labels={"value": "Edad", "count": "Llamadas"}
             )
             fig_age.update_layout(
-                plot_bgcolor="#F5F3EE",
+                plot_bgcolor="#FFFFFF",
                 paper_bgcolor="rgba(0,0,0,0)",
                 margin=dict(t=20, b=20),
                 showlegend=False,
@@ -206,7 +214,8 @@ with col_bottom_right:
             )
             st.plotly_chart(fig_age, use_container_width=True)
         else:
-            edad_counts = df_filtered["llamante_edad"].value_counts().head(15).reset_index()
+            edad_counts = df_filtered["llamante_edad"].value_counts().reset_index()
+        edad_counts = edad_counts[~edad_counts["llamante_edad"].str.lower().str.contains("no lo s", na=False)]
             edad_counts.columns = ["edad", "count"]
             fig_age = px.bar(
                 edad_counts,
@@ -216,7 +225,7 @@ with col_bottom_right:
                 labels={"count": "Llamadas", "edad": "Edad"}
             )
             fig_age.update_layout(
-                plot_bgcolor="#F5F3EE",
+                plot_bgcolor="#FFFFFF",
                 paper_bgcolor="rgba(0,0,0,0)",
                 margin=dict(t=20, b=20),
                 font=dict(color="#085041")
