@@ -215,7 +215,7 @@ with col_bottom_right:
             st.plotly_chart(fig_age, use_container_width=True)
         else:
             edad_counts = df_filtered["llamante_edad"].value_counts().reset_index()
-        edad_counts = edad_counts[~edad_counts["llamante_edad"].str.lower().str.contains("no lo s", na=False)]
+            edad_counts = edad_counts[~edad_counts["llamante_edad"].str.lower().str.contains("no lo s", na=False)]
             edad_counts.columns = ["edad", "count"]
             fig_age = px.bar(
                 edad_counts,
