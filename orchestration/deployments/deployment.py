@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-PROJECT_ROOT = Path.home() / "data-engineering-zoomcamp-final-project"
+PROJECT_ROOT = Path.home() / "llamatel-crisis-lifeline-pipeline"
 sys.path.insert(0, str(PROJECT_ROOT))
 from orchestration.flows.main_flow import main_flow
 
