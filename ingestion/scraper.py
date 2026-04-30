@@ -81,18 +81,26 @@ def scrape(on_record=None, start_date: str = None, end_date: str = None) -> None
                     page.wait_for_load_state("domcontentloaded")
                     return True
                 except Exception as e:
-                    if 'Timeout' in type(e).__name__ or 'Timeout' in str(e):
-                        if attempt < 2:
-                            print(f"Timeout on attempt {attempt + 1}, refreshing page...")
-                            page.reload(wait_until="domcontentloaded")
-                            next_link = page.locator("a:has-text('Siguiente')")
-                            if next_link.count() == 0:
+                    if attempt < 2:
+                        print(f"Attempt {attempt + 1} failed: {e}, waiting...")
+                        page.wait_for_timeout(3000)
+                        
+                        # check if button reappeared after waiting
+                        next_link = page.locator("a:has-text('Siguiente')")
+                        if next_link.count() == 0:
+                            print("Siguiente button gone after wait, trying reload...")
+                            try:
+                                page.reload(wait_until="domcontentloaded", timeout=60000)  # longer timeout
+                                next_link = page.locator("a:has-text('Siguiente')")
+                                if next_link.count() == 0:
+                                    return False
+                            except Exception as reload_err:
+                                print(f"Reload also failed: {reload_err}")
                                 return False
-                        else:
-                            print("Max retries reached on Siguiente button")
-                            return False
+
                     else:
-                        raise
+                        print(f"Max retries reached: {e}")
+                        return False
             
             return False
 
