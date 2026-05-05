@@ -99,6 +99,18 @@ def _parse_lines(lines: list, num_pages: int) -> dict:
 
     # Line-by-line parsing
     for i, line in enumerate(lines):
+        if "24.Fecha" in line:
+            # check if date is on same line
+            m = re.search(r'24\.Fecha\s+([\d]{2}/[\d]{2}/[\d]{4})', line)
+            if m:
+                form_data["llamada_fecha"] = m.group(1)
+            else:
+                # date is on the previous line
+                if i > 0:
+                    m = re.search(r'([\d]{2}/[\d]{2}/[\d]{4})', lines[i - 1])
+                    if m:
+                        form_data["llamada_fecha"] = m.group(1)
+        
         if any(f in line for f in ["1.Sexo", "2.Edad", "3.E. civil", "4.Convive", "5.Asiduidad"]):
             for pattern, field in [
                 (r"1\.Sexo\s+(\d+)(?:\s+2\.|$)", "llamante_sexo"),
@@ -112,17 +124,23 @@ def _parse_lines(lines: list, num_pages: int) -> dict:
                     form_data[field] = m.group(1)
 
         if "6.Problema" in line:
+            # problema_part = line.split("6.Problema")[1]
+            # matches = re.findall(r"([A-Za-z])\s+(\d+)", problema_part)
+            # if matches:
+            #     form_data["llamante_problema"] = " ".join(f"{l} {n}" for l, n in matches)
+            # for pattern, field in [
+            #     (r"7\.Naturaleza\s+(\d+)(?:\s+8\.|$)", "llamante_naturaleza"),
+            #     (r"8\.\s*Inicio\s+(\d+)(?:\s|$)", "llamante_inicio"),
+            # ]:
+            #     m = re.search(pattern, line)
+            #     if m:
+            #         form_data[field] = m.group(1)
             problema_part = line.split("6.Problema")[1]
-            matches = re.findall(r"([A-Z])\s+(\d+)", problema_part)
+            # stop before field 7
+            problema_part = re.split(r'7\.Naturaleza', problema_part)[0]
+            matches = re.findall(r"([A-Za-z])\s+(\d+)", problema_part)
             if matches:
-                form_data["llamante_problema"] = " ".join(f"{l} {n}" for l, n in matches)
-            for pattern, field in [
-                (r"7\.Naturaleza\s+(\d+)(?:\s+8\.|$)", "llamante_naturaleza"),
-                (r"8\.\s*Inicio\s+(\d+)(?:\s|$)", "llamante_inicio"),
-            ]:
-                m = re.search(pattern, line)
-                if m:
-                    form_data[field] = m.group(1)
+                form_data["llamante_problema"] = " ".join(f"{l.upper()} {n}" for l, n in matches)
 
         if any(f in line for f in ["9.Actitud ante el orientador", "10.Presentación", "11.Paralenguaje"]):
             for pattern, field in [
@@ -153,7 +171,7 @@ def _parse_lines(lines: list, num_pages: int) -> dict:
                 form_data["llamante_actitud_problema"] = m.group(1)
 
         if "21.Problema" in line:
-            matches = re.findall(r"([A-Z])\s+(\d+)", line.split("21.Problema")[1])
+            matches = re.findall(r"([A-Za-z])\s+(\d+)", line.split("21.Problema")[1])
             if matches:
                 form_data["tercero_problema"] = " ".join(f"{l} {n}" for l, n in matches)
 
@@ -235,8 +253,7 @@ def _parse_lines(lines: list, num_pages: int) -> dict:
         "tercero_relacion": r"20\.Relación\s+(\d+)",
         "tercero_actitud_problema": r"22\.Actitud ante problema\s+(\d+)",
         "llamada_hora": r"23\.Hora\s+([\d:]+)",
-        "llamada_fecha": r'24\.Fecha\s+([\d/]+)',
-        "llamada_resultado": r"25\.Resultado\s+(\d+)",
+        "llamada_resultado": r'25\.Resultado\s+(\w+)',
         "llamada_duracion": r"26\.Duración\s+(\d+)",
         "entrevista_hora": r"29\.Hora\s+([\d:]+)",
         "entrevista_fecha": r'30\.Fecha\s+([\d/]+)',
@@ -280,6 +297,6 @@ def extract(pdf_path: str) -> pd.DataFrame:
     return pd.DataFrame([form_data])
 
 if __name__ == "__main__":
-    pdf_path = "/tmp/llamatel/58-AJ.pdf"  # Replace with actual PDF path
+    pdf_path = "/home/lauosgom/anomaly/pdf_correct/240-AI.pdf"  # Replace with actual PDF path
     df = extract(pdf_path)
     print(df.T)

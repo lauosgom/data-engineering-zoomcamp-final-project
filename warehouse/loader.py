@@ -101,7 +101,7 @@ def load(df: pd.DataFrame) -> None:
 if __name__ == "__main__":
     from ingestion.extractor import extract
     import os
-    files = os.listdir("/tmp/llamatel/")
+    files = os.listdir("/home/lauosgom/anomaly/pdf_correct/")
     for file in files:
-        df = extract(f"/tmp/llamatel/{file}")
+        df = extract(f"/home/lauosgom/anomaly/pdf_correct/{file}")
         load(df)
