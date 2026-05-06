@@ -102,6 +102,9 @@ if __name__ == "__main__":
     from ingestion.extractor import extract
     import os
     files = os.listdir("/home/lauosgom/anomaly/pdf_correct/")
+    # df = extract(f"/home/lauosgom/anomaly/pdf_correct/11902-U.pdf")
+    # print(df[["llamada_fecha", "llamante_problema"]])
     for file in files:
         df = extract(f"/home/lauosgom/anomaly/pdf_correct/{file}")
+        # df = extract(f"/home/lauosgom/anomaly/pdf_correct/11902-U.pdf")
         load(df)
